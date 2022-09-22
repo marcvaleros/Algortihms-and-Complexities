@@ -59,10 +59,12 @@ void insertionSort(int A[], int n){
     }
     A[y + 1] = key;
   }
+
      printf("Sorted Array \n");
       for(x=0; x < n; x++){
         printf("%d ",A[x]);
     }
+    
 }
 
 void bubbleSort(int A[], int n){
