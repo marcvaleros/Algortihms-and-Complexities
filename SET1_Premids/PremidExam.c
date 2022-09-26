@@ -51,19 +51,19 @@ void bucketSort(List *L, int pvalue){
             *trav = temp->link;
 
             trav2 = &bucketlist[temp->elem/pvalue % 10];
-
+            
             if(*trav2 != NULL){
                temp->link = *trav2;
             }else{
                temp->link = NULL;
             }
-
             *trav2 = temp; 
   }
   //gather the elements back into the LL
 
   *L = NULL;
   trav2 = NULL;
+
   for(x = BUCKET_SIZE - 1; x >= 0; x--){
         for(trav2 = &bucketlist[x]; *trav2 != NULL;){
 
@@ -77,6 +77,7 @@ void bucketSort(List *L, int pvalue){
           }else{
             temp->link = NULL;
           }
+
           *L = temp;
         }
   }
