@@ -35,17 +35,37 @@ void main(){
 
 void bucketSort(List *L, int pvalue){
   List *trav, *trav2, ptr,temp;
-  int num;
+  int num,x;
   Bucket bucketlist;
 
   //initialize bucketlist
+  for(x = 0;x < BUCKET_SIZE;x++){
+    bucketlist[x] = NULL;
+  }
+
 
   //traverse the LL and put all the values with the same place value 
-  for(trav = L; *trav != NULL; trav = &(*trav)->link){
-        //determine where to add
-        temp = *trav;
-        (*trav)->link = temp->link; 
-        for(trav2 = bucketlist[temp->elem/pvalue % 10]; *trav2 != NULL; trav2 = &(*trav2)->link){
+  for(trav = L; *trav != NULL;){
+            temp = *trav;
+            *trav = temp->link;
+
+            trav2 = &bucketlist[temp->elem/pvalue % 10];
+            if(*trav2 != NULL){
+               temp->link = *trav2;
+               *trav2 = temp; 
+            }else{
+               temp->link = NULL;
+               *trav2 = temp; 
+            }
+           
+  }
+
+  //gather the elements back into the LL
+
+  trav2 =  NULL;
+  for(x = BUCKET_SIZE - 1; x >= 0; x--){
+        for(trav2 = &bucketlist[x]; *trav2 != NULL; trav2 = &(*trav2)->link){
+          printf(" %d ", (*trav2)->elem);
         }
   }
 }
