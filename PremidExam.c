@@ -28,8 +28,10 @@ void main(){
       insertFirst(&LL, A[x]);
     }
 
-    // displayLL(LL);
+    displayLL(LL);
+    printf("\n");
     radixSort(&LL);
+    displayLL(LL);
 
 }
 
@@ -43,31 +45,44 @@ void bucketSort(List *L, int pvalue){
     bucketlist[x] = NULL;
   }
 
-
   //traverse the LL and put all the values with the same place value 
   for(trav = L; *trav != NULL;){
             temp = *trav;
             *trav = temp->link;
 
             trav2 = &bucketlist[temp->elem/pvalue % 10];
+
             if(*trav2 != NULL){
                temp->link = *trav2;
-               *trav2 = temp; 
             }else{
                temp->link = NULL;
-               *trav2 = temp; 
             }
-           
-  }
 
+            *trav2 = temp; 
+  }
   //gather the elements back into the LL
 
-  trav2 =  NULL;
+  *L = NULL;
+  trav2 = NULL;
   for(x = BUCKET_SIZE - 1; x >= 0; x--){
-        for(trav2 = &bucketlist[x]; *trav2 != NULL; trav2 = &(*trav2)->link){
-          printf(" %d ", (*trav2)->elem);
+        for(trav2 = &bucketlist[x]; *trav2 != NULL;){
+
+          //remove first elem until empty
+          temp = *trav2;
+          *trav2 = temp->link;
+
+          //add to LL using insertfirst
+          if(*L != NULL){
+            temp->link = *L;
+          }else{
+            temp->link = NULL;
+          }
+          *L = temp;
         }
   }
+
+  // printf("\nThis is the partially sorted LL:\n");
+  // displayLL(*L);
 }
 
 void radixSort(List *L){
@@ -107,6 +122,5 @@ int findMaxElem(List *L){
     }
   }
 
-  printf("\nThe max is %d\n",max);
   return max;
 }
